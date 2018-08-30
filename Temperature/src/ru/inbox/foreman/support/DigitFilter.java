@@ -7,6 +7,7 @@ import javax.swing.text.DocumentFilter;
 
 public class DigitFilter extends DocumentFilter {
     private String regex = "[^(\\d.,\\-)]";
+
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
         string = string.replaceAll(regex, "");
@@ -18,5 +19,5 @@ public class DigitFilter extends DocumentFilter {
         text = text.replaceAll(regex, "");
         super.replace(fb, offset, length, text, attrs);
     }
-    }
+}
 

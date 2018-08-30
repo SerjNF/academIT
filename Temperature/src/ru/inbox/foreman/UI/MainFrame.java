@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
  * Класс окна перевода температур.
  *
  * @author SergeyNF
- * @version 1.0
+ * @version 1.1
  * @since 30.08.18
  */
 public class MainFrame {
@@ -44,7 +44,7 @@ public class MainFrame {
         JPanel inputPanel = createInputPanel();
         // лэйбел
         JPanel mediumPanel = new JPanel();
-        JLabel label = new JLabel(new ImageIcon("icon/konvert.png"), JLabel.CENTER);
+        JLabel label = new JLabel(new ImageIcon("Temperature/icon/convert.png"), JLabel.CENTER);
         mediumPanel.add(label);
         // панель результата
         JPanel resultPanel = createResultPanel();
@@ -61,15 +61,14 @@ public class MainFrame {
         frame.setVisible(true);
         frame.setSize(500, 270);
         frame.setResizable(false);
-        //   frame.pack();
     }
 
     private JMenuBar createMenu() {
         JMenuBar mBar = new JMenuBar();
 
         JMenu menuScale = new JMenu("Menu");
-        menuScale.setMnemonic('m');
-        JMenuItem close = new JMenuItem("Exit", new ImageIcon("icon/Exit.png"));
+        menuScale.setMnemonic('M');
+        JMenuItem close = new JMenuItem("Exit", new ImageIcon("Temperature/icon/Exit.png"));
         close.setAccelerator(KeyStroke.getKeyStroke('X', KeyEvent.ALT_MASK));
         close.addActionListener(e -> closeWindow());
 
@@ -79,7 +78,6 @@ public class MainFrame {
         return mBar;
     }
 
-
     private void closeWindow() {
         this.frame.dispose();
     }
@@ -88,8 +86,11 @@ public class MainFrame {
         String result = converter.convertTemp(selectInputScale.getSelectedIndex(),
                 selectResultTempScale.getSelectedIndex(),
                 inputTemp.getText());
-
-        resultTemp.setText(result);
+        if (result == null) {
+            JOptionPane.showMessageDialog(frame, "Некорректные данные", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        } else {
+            resultTemp.setText(result);
+        }
     }
 
     private JPanel createInputPanel() {
@@ -118,11 +119,13 @@ public class MainFrame {
         resultTemp = new JLabel();
         resultTemp.setHorizontalAlignment(SwingConstants.RIGHT);
         resultTemp.setFont(font);
+        resultTemp.setText("0");
 
         JPanel rPanel = new JPanel(new GridLayout(1, 2));
         rPanel.add(selectResultTempScale);
         rPanel.add(resultTemp);
 
+        selectInputScale.addActionListener(e -> setResultTemp());
         selectResultTempScale.addActionListener(e -> setResultTemp());
         inputTemp.addActionListener(e -> setResultTemp());
 
