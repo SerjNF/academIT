@@ -1,8 +1,8 @@
 package ru.inbox.foreman.model;
 
-import ru.inbox.foreman.Scales.Celsius;
-import ru.inbox.foreman.Scales.Fahrenheit;
-import ru.inbox.foreman.Scales.Kelvin;
+import ru.inbox.foreman.scales.Celsius;
+import ru.inbox.foreman.scales.Fahrenheit;
+import ru.inbox.foreman.scales.Kelvin;
 import ru.inbox.foreman.support.ParserToDouble;
 import ru.inbox.foreman.support.TemperaturesScales;
 

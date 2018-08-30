@@ -1,20 +1,20 @@
-package ru.inbox.foreman.Scales;
+package ru.inbox.foreman.scales;
 
 import ru.inbox.foreman.support.TemperaturesScales;
 
-public class Kelvin implements TemperaturesScales {
+public class Celsius implements TemperaturesScales {
+
     @Override
     public double convertToCelsius(double temperature) {
-        return temperature - 273.15;
+        return temperature;
     }
 
     @Override
     public double convertFromCelsius(double temperature) {
-        return temperature + 273.15;
+        return temperature;
     }
-
     @Override
     public String getScaleName() {
-        return "Кельвин";
+        return "Цельсия";
     }
 }

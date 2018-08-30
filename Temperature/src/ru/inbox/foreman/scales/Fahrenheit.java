@@ -1,4 +1,4 @@
-package ru.inbox.foreman.Scales;
+package ru.inbox.foreman.scales;
 
 import ru.inbox.foreman.support.TemperaturesScales;
 
