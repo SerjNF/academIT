@@ -44,7 +44,7 @@ public class MainFrame {
         JPanel inputPanel = createInputPanel();
         // лэйбел
         JPanel mediumPanel = new JPanel();
-        JLabel label = new JLabel(new ImageIcon("konvert.png"), JLabel.CENTER);
+        JLabel label = new JLabel(new ImageIcon("icon/konvert.png"), JLabel.CENTER);
         mediumPanel.add(label);
         // панель результата
         JPanel resultPanel = createResultPanel();
@@ -69,7 +69,7 @@ public class MainFrame {
 
         JMenu menuScale = new JMenu("Menu");
         menuScale.setMnemonic('m');
-        JMenuItem close = new JMenuItem("Exit", new ImageIcon("Exit.png"));
+        JMenuItem close = new JMenuItem("Exit", new ImageIcon("icon/Exit.png"));
         close.setAccelerator(KeyStroke.getKeyStroke('X', KeyEvent.ALT_MASK));
         close.addActionListener(e -> closeWindow());
 
