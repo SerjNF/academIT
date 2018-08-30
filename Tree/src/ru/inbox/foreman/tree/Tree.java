@@ -17,7 +17,7 @@ public class Tree<T> {
     private int size;
 
     /**
-     * конструктор с компаратором по умолчанию
+     * конструктор
      */
     public Tree() {
         this(null);
