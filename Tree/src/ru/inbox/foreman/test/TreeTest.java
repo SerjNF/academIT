@@ -7,7 +7,8 @@ import org.junit.Test;
 import ru.inbox.foreman.person.Person;
 import ru.inbox.foreman.tree.Tree;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Comparator;
 
 import static org.junit.Assert.*;
@@ -44,7 +45,7 @@ public class TreeTest {
         testTreePerson.add(new Person("Sergey", 35));
         testTreePerson.add(new Person("Sergey", 35));
         testTreePerson.add(new Person("Petr", 11));
-    //    testTreePerson.add(null);
+        //    testTreePerson.add(null);
         testTreePerson.add(new Person("Anton", 42));
         testTreePerson.add(new Person("Efim", 25));
         testTreePerson.add(new Person("Efim", 5));
@@ -74,9 +75,9 @@ public class TreeTest {
     public void testFind() {
         testAdd();
         assertEquals(new Person("Sergey", 35), testTreePerson.findNode(new Person("Sergey", 35)).getData());
-     //   assertNotNull(testTreePerson.findNode(null));
+        //   assertNotNull(testTreePerson.findNode(null));
         assertNotNull(testTreePerson.findNode(new Person("Sergey", 35)));
-        assertNull(testTreePerson.findNode(new Person("Serj", 35)));
+        assertNull(testTreePerson.findNode(new Person("Serj", 34)));
         try {
             assertNotEquals(null, testTreeEmpty.findNode(null));
             Assert.fail("Нет исключения");
@@ -86,32 +87,25 @@ public class TreeTest {
         }
     }
 
-
     @Test
     public void testRemove() {
         testAdd();
         assertTrue(testTreePerson.remove(new Person("Ivan", 1)));
         assertTrue(testTreePerson.remove(new Person("Sergey", 35)));
         assertEquals(9, testTreePerson.getSize());
-        try {
-            assertFalse(testTreeEmpty.remove(null));
-            Assert.fail("Нет исключения");
-        } catch (Exception e) {
-            assertNotNull(e);
-            assertEquals("No Such Element", e.getMessage());
-        }
+        assertFalse(testTreeEmpty.remove(null));
     }
 
     @Test
     public void testVisitVertical() {
         testAdd();
         try (PrintWriter printWriter = new PrintWriter("outputTestTreeVisitVertical.txt")) {
-            testTreePerson.visitInVertical(person -> printNodes(person, printWriter)
+            testTreePerson.visitDepthFirst(person -> printNodes(person, printWriter)
             );
             printWriter.println("После удаления");
             testTreePerson.remove(new Person("Sergey", 35));
             testTreePerson.remove(new Person("Sergey", 35));
-            testTreePerson.visitInVertical(person -> printNodes(person, printWriter)
+            testTreePerson.visitDepthFirst(person -> printNodes(person, printWriter)
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,12 +116,12 @@ public class TreeTest {
     public void testVisitVerticalRecurs() {
         testAdd();
         try (PrintWriter printWriter = new PrintWriter("outputTestTreeVisitVerticalRecurs.txt")) {
-            testTreePerson.visitInVerticalRecurs(person -> printNodes(person, printWriter)
+            testTreePerson.visitDepthFirstRecurs(person -> printNodes(person, printWriter)
             );
             printWriter.println("После удаления");
             testTreePerson.remove(new Person("Sergey", 35));
             testTreePerson.remove(new Person("Sergey", 35));
-            testTreePerson.visitInVerticalRecurs(person -> printNodes(person, printWriter)
+            testTreePerson.visitDepthFirstRecurs(person -> printNodes(person, printWriter)
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,11 +132,11 @@ public class TreeTest {
     public void testVisitHorizontal() {
         testAdd();
         try (PrintWriter printWriter = new PrintWriter("outputTestTreeVisitHorizontal.txt")) {
-            testTreePerson.visitInHorizontal(person -> printNodes(person, printWriter));
+            testTreePerson.visitBreadthFirst(person -> printNodes(person, printWriter));
             printWriter.println("После удаления");
             testTreePerson.remove(new Person("Sergey", 35));
             testTreePerson.remove(new Person("Sergey", 35));
-            testTreePerson.visitInHorizontal(person -> printNodes(person, printWriter));
+            testTreePerson.visitBreadthFirst(person -> printNodes(person, printWriter));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  *
  * @param <T>
  */
-public class Tree<T extends Comparable<? super T>> {
+public class Tree<T> {
     private TreeNode<T> root;
     private Comparator<T> comparator;
     private int size;
@@ -20,7 +20,7 @@ public class Tree<T extends Comparable<? super T>> {
      * конструктор с компаратором по умолчанию
      */
     public Tree() {
-        this(Comparator.naturalOrder());
+        this(null);
     }
 
     /**
@@ -55,8 +55,7 @@ public class Tree<T extends Comparable<? super T>> {
         }
 
         for (TreeNode<T> currentNode = root; ; ) {
-
-            if (compareNodes(data, currentNode.getData())) {
+            if (compareNodes(data, currentNode.getData()) < 1) {
                 if (currentNode.getLeft() == null) {
                     currentNode.setLeft(new TreeNode<>(data));
                     size++;
@@ -85,7 +84,6 @@ public class Tree<T extends Comparable<? super T>> {
         if (size == 0) {
             throw new NoSuchElementException("No Such Element");
         }
-        //noinspection unchecked
         return (findNodes(data))[0];
     }
 
@@ -97,19 +95,17 @@ public class Tree<T extends Comparable<? super T>> {
      */
     public boolean remove(T data) {
         if (size == 0) {
-            throw new NoSuchElementException("No Such Element");
+            return false;
         }
-        //noinspection unchecked
         TreeNode<T>[] removedAndParent = findNodes(data);
         TreeNode<T> currentNode = removedAndParent[0];
-        //noinspection unchecked
         TreeNode<T> parent = removedAndParent[1];
         if (currentNode == null) {
             return false;
         }
         //удаление листа
         if (currentNode.getLeft() == null && currentNode.getRight() == null) {
-            if(parent == null){
+            if (parent == null) {
                 size = 0;
                 root = null;
                 return true;
@@ -121,7 +117,7 @@ public class Tree<T extends Comparable<? super T>> {
         //удаление узла и одним сыном
         if (currentNode.getLeft() == null || currentNode.getRight() == null) {
             TreeNode<T> nextNode = currentNode.getLeft() == null ? currentNode.getRight() : currentNode.getLeft();
-            if(parent == null) {
+            if (parent == null) {
                 root = nextNode;
                 size--;
                 return true;
@@ -130,6 +126,7 @@ public class Tree<T extends Comparable<? super T>> {
             size--;
             return true;
         }
+        //удаление полноценного узла
         removeDefaultNode(currentNode);
         size--;
         return true;
@@ -140,12 +137,12 @@ public class Tree<T extends Comparable<? super T>> {
      *
      * @param consumer действие с данными узла
      */
-    public void visitInVertical(Consumer<T> consumer) {
+    public void visitDepthFirst(Consumer<T> consumer) {
         Stack<TreeNode<T>> stack = new Stack<>();
         stack.add(root);
-        TreeNode<T> currentNode;
+
         while (!stack.empty()) {
-            currentNode = stack.pop();
+            TreeNode<T> currentNode = stack.pop();
             consumer.accept(currentNode.getData());
             if (currentNode.getRight() != null) {
                 stack.add(currentNode.getRight());
@@ -153,7 +150,6 @@ public class Tree<T extends Comparable<? super T>> {
             if (currentNode.getLeft() != null) {
                 stack.add(currentNode.getLeft());
             }
-
         }
     }
 
@@ -162,12 +158,12 @@ public class Tree<T extends Comparable<? super T>> {
      *
      * @param consumer действие с данными узла
      */
-    public void visitInHorizontal(Consumer<T> consumer) {
+    public void visitBreadthFirst(Consumer<T> consumer) {
         Queue<TreeNode<T>> queue = new ArrayDeque<>();
         queue.add(root);
-        TreeNode<T> currentNode;
+
         while (queue.size() != 0) {
-            currentNode = queue.poll();
+            TreeNode<T> currentNode = queue.poll();
             consumer.accept(currentNode.getData());
             if (currentNode.getLeft() != null) {
                 queue.add(currentNode.getLeft());
@@ -183,12 +179,13 @@ public class Tree<T extends Comparable<? super T>> {
      *
      * @param consumer действие с данными узла
      */
-    public void visitInVerticalRecurs(Consumer<T> consumer) {
+    public void visitDepthFirstRecurs(Consumer<T> consumer) {
         visitRecurs(consumer, root);
     }
 
     private void visitRecurs(Consumer<T> consumer, TreeNode<T> startNode) {
         consumer.accept(startNode.getData());
+
         if (startNode.getLeft() != null) {
             visitRecurs(consumer, startNode.getLeft());
         }
@@ -202,7 +199,6 @@ public class Tree<T extends Comparable<? super T>> {
      *
      * @param removedNode удаляемый узел
      */
-
     private void removeDefaultNode(TreeNode<T> removedNode) {
         TreeNode<T> lastLeftNode = removedNode.getRight();
         TreeNode<T> parentToLastLeftNode = removedNode;
@@ -238,17 +234,16 @@ public class Tree<T extends Comparable<? super T>> {
      * @param data данные
      * @return массив из найденного узла и его родителя
      */
-    private TreeNode[] findNodes(T data) {
-
+    private TreeNode<T>[] findNodes(T data) {
         for (TreeNode<T> currentNode = root, parentNode = null; ; ) {
-            if (currentNode.getData() == null && data == null) {
+            int compareResult = compareNodes(data, currentNode.getData());
+            if (compareResult == 0) {
+                //noinspection unchecked
                 return new TreeNode[]{currentNode, parentNode};
             }
-            if (Objects.equals(data, currentNode.getData())) {
-                return new TreeNode[]{currentNode, parentNode};
-            }
-            if (compareNodes(data, currentNode.getData())) {
+            if (compareResult < 0) {
                 if (currentNode.getLeft() == null) {
+                    //noinspection unchecked
                     return new TreeNode[]{null, parentNode};
                 }
                 parentNode = currentNode;
@@ -256,6 +251,7 @@ public class Tree<T extends Comparable<? super T>> {
 
             } else {
                 if (currentNode.getRight() == null) {
+                    //noinspection unchecked
                     return new TreeNode[]{null, parentNode};
                 }
                 parentNode = currentNode;
@@ -264,16 +260,20 @@ public class Tree<T extends Comparable<? super T>> {
         }
     }
 
-    private boolean compareNodes(T data, T currentNodeData) {
+    private int compareNodes(T data, T currentNodeData) {
         if (data == null && currentNodeData == null) {
-            return true;
+            return 0;
         }
         if (data == null) {
-            return true;
+            return -1;
         }
         if (currentNodeData == null) {
-            return false;
+            return 1;
         }
-        return comparator.compare(data, currentNodeData) < 0;
+        if (comparator != null) {
+            return comparator.compare(data, currentNodeData);
+        }
+        //noinspection unchecked
+        return ((Comparable<T>) data).compareTo(currentNodeData);
     }
 }

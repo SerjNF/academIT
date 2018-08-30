@@ -1,14 +1,12 @@
 package ru.inbox.foreman.treeNode;
 
-import java.util.Objects;
-
 /**
  * Класс узла дерева
  *
  * @param <T> тип данных;
  * @author SergeyNF
  */
-public class TreeNode<T extends Comparable<? super T>> {
+public class TreeNode<T> {
     private T data;
     private TreeNode<T> left;
     private TreeNode<T> right;
@@ -19,12 +17,6 @@ public class TreeNode<T extends Comparable<? super T>> {
 
     public TreeNode(T data) {
         this.data = data;
-    }
-
-    public TreeNode(T data, TreeNode<T> left, TreeNode<T> right) {
-        this.data = data;
-        this.left = left;
-        this.right = right;
     }
 
     public TreeNode<T> getLeft() {
@@ -61,6 +53,6 @@ public class TreeNode<T extends Comparable<? super T>> {
         }
         //noinspection unchecked
         TreeNode<T> t = (TreeNode<T>) obj;
-        return data.equals(t.data) && left.equals(t.left) && right.equals(t.right);
+        return data.equals(t.data) && left == t.left && right == t.right;
     }
 }
