@@ -53,9 +53,9 @@ public class Tree<T> {
             size++;
             return;
         }
-
-        for (TreeNode<T> currentNode = root; ; ) {
-            if (compareNodes(data, currentNode.getData()) < 1) {
+        TreeNode<T> currentNode = root;
+        while (true) {
+            if (compareNodes(data, currentNode.getData()) < 0) {
                 if (currentNode.getLeft() == null) {
                     currentNode.setLeft(new TreeNode<>(data));
                     size++;
@@ -84,7 +84,7 @@ public class Tree<T> {
         if (size == 0) {
             throw new NoSuchElementException("No Such Element");
         }
-        return (findNodes(data))[0];
+        return findNodes(data)[0];
     }
 
     /**
@@ -163,7 +163,7 @@ public class Tree<T> {
         queue.add(root);
 
         while (queue.size() != 0) {
-            TreeNode<T> currentNode = queue.poll();
+            TreeNode<T> currentNode = queue.remove();
             consumer.accept(currentNode.getData());
             if (currentNode.getLeft() != null) {
                 queue.add(currentNode.getLeft());

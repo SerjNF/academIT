@@ -45,14 +45,14 @@ public class TreeTest {
         testTreePerson.add(new Person("Sergey", 35));
         testTreePerson.add(new Person("Sergey", 35));
         testTreePerson.add(new Person("Petr", 11));
-        //    testTreePerson.add(null);
+            testTreePerson.add(null);
         testTreePerson.add(new Person("Anton", 42));
         testTreePerson.add(new Person("Efim", 25));
         testTreePerson.add(new Person("Efim", 5));
         testTreePerson.add(new Person("Ivan", 37));
         testTreePerson.add(new Person("Ivan", 14));
 
-        assertEquals(11, testTreePerson.getSize());
+        assertEquals(12, testTreePerson.getSize());
 
         testTreeString.add("Ivan");
         testTreeString.add("Efim");
@@ -92,7 +92,7 @@ public class TreeTest {
         testAdd();
         assertTrue(testTreePerson.remove(new Person("Ivan", 1)));
         assertTrue(testTreePerson.remove(new Person("Sergey", 35)));
-        assertEquals(9, testTreePerson.getSize());
+        assertEquals(10, testTreePerson.getSize());
         assertFalse(testTreeEmpty.remove(null));
     }
 
