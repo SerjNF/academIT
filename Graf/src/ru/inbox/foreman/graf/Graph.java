@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.function.Consumer;
 
 public class Graph {
+
     private int[][] nodes;
 
     public Graph(int[][] nodes) {
