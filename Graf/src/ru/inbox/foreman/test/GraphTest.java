@@ -12,23 +12,24 @@ public class GraphTest {
     @Before
     public void createField() {
         testGraph = new Graph(new int[][]{{0, 0, 0, 0, 0, 0, 0},
-                                          {0, 0, 1, 1, 1, 1, 0},
-                                          {0, 1, 0, 0, 0, 0, 1},
-                                          {0, 1, 0, 0, 0, 0, 0},
-                                          {0, 1, 0, 0, 0, 1, 0},
-                                          {0, 1, 0, 0, 1, 0, 1},
-                                          {0, 0, 1, 0, 0, 1, 0}});
+                {0, 0, 1, 1, 1, 1, 0},
+                {0, 1, 0, 0, 0, 0, 1},
+                {0, 1, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 1, 0},
+                {0, 1, 0, 0, 1, 0, 1},
+                {0, 0, 1, 0, 0, 1, 0}});
 
     }
 
     @Test
     public void testVisitDepthFirst() {
-       testGraph.visitDepthFirst(this::printNodes);
+        testGraph.visitDepthFirst(this::printNodes);
         System.out.println();
     }
+
     @Test
     public void testVisitBreadthFirst() {
-       testGraph.visitBreadthFirst(this::printNodes);
+        testGraph.visitBreadthFirst(this::printNodes);
         System.out.println();
     }
 
