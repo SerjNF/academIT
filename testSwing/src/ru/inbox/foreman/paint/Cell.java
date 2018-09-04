@@ -10,12 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 public class Cell extends JLabel {
-
+    boolean mouseEnter = false;
+    boolean isHide = false;
     Icon normal;
     Icon rollover;
     Icon selected;
 
-    Cell(){
+    Cell() {
 
         normal = new ButtonRollover.ColorIcon(Color.GREEN, 10, 10);
         rollover = new ButtonRollover.ColorIcon(Color.RED, 10, 10);
@@ -24,7 +25,10 @@ public class Cell extends JLabel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setToolTipText("Clicked");
+                int clickNumber = e.getClickCount();
+              //  e.
+                isHide = true;
+                repaint();
             }
 
             @Override
@@ -40,14 +44,16 @@ public class Cell extends JLabel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 System.out.println("in");
-                pintB();
+                mouseEnter = true;
+                repaint();
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 System.out.println("out");
-              //  setText("OUT");
+                mouseEnter = false;
+                repaint();
             }
 
             @Override
@@ -67,27 +73,36 @@ public class Cell extends JLabel {
         });
     }
 
-    private void pintB() {
-        repaint(new Rectangle(10,10,20,20));
-    }
-
-//    @Override
-//    public void paint(Graphics g){
-//
-//        //super.paint(getGraphics());
-//        super.paint(g);
-//        g = getGraphics();
-//        g.drawRect(getBounds().x, getBounds().y, getBounds().width, getBounds().height);
-//        System.out.println("Shit happends" + "\n");
+//    private void pintB() {
+//        repaint(new Rectangle(10,10,20,20));
 //    }
 
-    public static void main(String[] arg){
+    @Override
+    public void paint(Graphics g) {
+
+        super.paint(g);
+        if (!isHide) {
+            if (!mouseEnter) {
+                g.drawRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
+            } else {
+                g.drawRect(getBounds().x + 4, getBounds().y + 4, getBounds().width - 8, getBounds().height - 8);
+                g.drawRect(getBounds().x + 5, getBounds().y + 5, getBounds().width - 10, getBounds().height - 10);
+            }
+        } else {
+            g.setColor(Color.GRAY);
+            g.fillRect(getBounds().x + 5, getBounds().y + 5, getBounds().width - 10, getBounds().height - 10);
+            g.setColor(Color.BLUE);
+            g.drawString("1", getBounds().width / 2, getBounds().height / 2);
+        }
+    }
+
+    public static void main(String[] arg) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(400, 200);
         frame.add(new Cell());
         frame.add(new Cell());
-        frame.setLocationRelativeTo( null );
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
