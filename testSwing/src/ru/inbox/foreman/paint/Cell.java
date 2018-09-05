@@ -26,7 +26,7 @@ public class Cell extends JLabel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int clickNumber = e.getClickCount();
-              //  e.
+                //  e.
                 isHide = true;
                 repaint();
             }
@@ -81,9 +81,10 @@ public class Cell extends JLabel {
     public void paint(Graphics g) {
 
         super.paint(g);
+        g.fillRect(getBounds().x + 20, getBounds().y + 20, getBounds().width - 40, getBounds().height - 40);
         if (!isHide) {
             if (!mouseEnter) {
-                g.drawRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
+                g.drawRect(getBounds().x + 10, getBounds().y + 10, getBounds().width - 20, getBounds().height - 20);
             } else {
                 g.drawRect(getBounds().x + 4, getBounds().y + 4, getBounds().width - 8, getBounds().height - 8);
                 g.drawRect(getBounds().x + 5, getBounds().y + 5, getBounds().width - 10, getBounds().height - 10);
@@ -100,10 +101,25 @@ public class Cell extends JLabel {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(400, 200);
-        frame.add(new Cell());
-        frame.add(new Cell());
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 3));
+//        frame.getContentPane().add(new Cell());
+//        frame.getContentPane().add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.add(new Cell());
+        panel.updateUI();
+        frame.getContentPane().add(panel, CENTER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        //  frame.pack();
     }
 
 }

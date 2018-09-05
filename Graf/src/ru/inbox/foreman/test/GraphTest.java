@@ -2,9 +2,7 @@ package ru.inbox.foreman.test;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.inbox.foreman.graf.Graph;
-
-import java.util.Arrays;
+import ru.inbox.foreman.graph.Graph;
 
 public class GraphTest {
     private Graph testGraph;
@@ -23,17 +21,26 @@ public class GraphTest {
 
     @Test
     public void testVisitDepthFirst() {
+        System.out.println("В глубину");
         testGraph.visitDepthFirst(this::printNodes);
         System.out.println();
     }
 
     @Test
     public void testVisitBreadthFirst() {
+        System.out.println("В ширину");
         testGraph.visitBreadthFirst(this::printNodes);
         System.out.println();
     }
 
-    private void printNodes(int[] node) {
-        System.out.println(Arrays.toString(node));
+    @Test
+    public void testVisitRecurs() {
+        System.out.println("В глубину");
+        testGraph.visitDepthFirstRecurs(this::printNodes);
+        System.out.println();
+    }
+
+    private void printNodes(int node) {
+        System.out.println(node);
     }
 }
