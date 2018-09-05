@@ -10,22 +10,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 public class Cell extends JLabel {
-    static int count = 0;
-    static int xx = 0;
-    static int yy = 0;
+    private static int count = 0;
     private boolean mouseEnter = false;
     private boolean isHide = false;
 
-    static Color[] colors = {Color.BLACK, Color.GREEN, Color.YELLOW, Color.RED, Color.GREEN, Color.YELLOW, Color.RED, Color.GREEN, Color.YELLOW, Color.BLACK, Color.GREEN, Color.YELLOW};
+    private  Color[] colors = {Color.BLACK, Color.GREEN, Color.YELLOW, Color.RED, Color.GREEN, Color.YELLOW, Color.RED, Color.GREEN, Color.YELLOW, Color.BLACK, Color.GREEN, Color.YELLOW};
 
-    Cell() {
+    private Cell() {
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int clickNumber = e.getClickCount();
-                //  e.
                 isHide = true;
+                repaint();
 
             }
 
@@ -70,7 +67,6 @@ public class Cell extends JLabel {
             }
         });
         count++;
-        xx = getBounds().width / 3 + xx;
     }
 
     @Override
@@ -78,7 +74,7 @@ public class Cell extends JLabel {
 
      //   super.paintComponent(g);
         g.setColor(colors[count]);
-        g.fillRect(getLocation().x + 20+ xx, getLocation().y + 20, getBounds().width - 40, getBounds().height - 40);
+        g.fillRect(getLocation().x + 20, getLocation().y + 20, getBounds().width - 40, getBounds().height - 40);
         if (!isHide) {
             if (!mouseEnter) {
                 g.drawRect(getLocation().x + 10, getLocation().y + 10, getBounds().width - 20, getBounds().height - 20);
@@ -101,11 +97,12 @@ public class Cell extends JLabel {
         panel.setLayout(new GridLayout(1, 3));
 
 //        frame.getContentPane().add(new Cell());
+
         panel.add(new Cell());
         panel.add(new Cell());
         panel.add(new Cell());
 
-      //  panel.updateUI();
+
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(400, 200);
