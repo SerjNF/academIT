@@ -1,6 +1,7 @@
 package ru.inbox.foreman.graph;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.function.IntConsumer;
@@ -14,14 +15,14 @@ public class Graph {
 
     public void visitDepthFirst(IntConsumer consumer) {
         boolean[] visitedNodes = new boolean[nodes.length];
-        Stack<Integer> stack = new Stack<>();
+        ArrayList<Integer> stack = new ArrayList<>();
 
         for (int k = 0; k < nodes.length; k++) {
             if (!visitedNodes[k]) {
                 stack.add(k);
 
-                while (!stack.empty()) {
-                    int currentNode = stack.pop();
+                while (!stack.isEmpty()) {
+                    int currentNode = stack.remove(stack.size() - 1);
                     if (!visitedNodes[currentNode]) {
                         consumer.accept(currentNode);
                         visitedNodes[currentNode] = true;
