@@ -1,19 +1,15 @@
 package ru.inbox.foreman.paint;
 
-import ru.inbox.foreman.paint.ButtonRollover;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 
 public class Cell extends JPanel {
-    boolean mouseEnter = false;
-    boolean isHide = false;
-    int button = 0;
-
+    private boolean mouseEnter = false;
+    private boolean isHide = false;
+    private int button = 0;
 
     Cell() {
 
@@ -27,7 +23,7 @@ public class Cell extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-              //  System.out.println("in");
+                //  System.out.println("in");
                 mouseEnter = true;
                 repaint();
 
@@ -35,7 +31,7 @@ public class Cell extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-              //  System.out.println("out");
+                //  System.out.println("out");
                 mouseEnter = false;
                 repaint();
             }
@@ -60,8 +56,9 @@ public class Cell extends JPanel {
             g.setColor(Color.GRAY);
             g.fillRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
             g.setColor(Color.BLUE);
-            g.setFont(new Font("Serif", Font.ITALIC, getBounds().height / 3));
-            g.drawString(String.valueOf(button), getBounds().width / 2, getBounds().height / 2);
+            g.setFont(new Font("Arial", Font.BOLD, getBounds().height / 2));
+
+            g.drawString(String.valueOf(button), getBounds().width * 2 / 5, getBounds().height * 2 / 3);
         }
     }
 

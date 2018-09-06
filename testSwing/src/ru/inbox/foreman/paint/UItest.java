@@ -7,7 +7,7 @@ public class UItest {
     JFrame frame;
     int x = 15, y = 12;
     Cell[][] cells;
-    UItest(){
+    private UItest(){
         cells = new Cell[x][y];
         frame = new JFrame();
         frame.getContentPane().add(createFieldCells());
