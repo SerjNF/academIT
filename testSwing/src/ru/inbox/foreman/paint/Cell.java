@@ -9,36 +9,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
-public class Cell extends JLabel {
-    private static int count = 0;
-    private boolean mouseEnter = false;
-    private boolean isHide = false;
+public class Cell extends JPanel {
+    boolean mouseEnter = false;
+    boolean isHide = false;
+    int button = 0;
 
-    private  Color[] colors = {Color.BLACK, Color.GREEN, Color.YELLOW, Color.RED, Color.GREEN, Color.YELLOW, Color.RED, Color.GREEN, Color.YELLOW, Color.BLACK, Color.GREEN, Color.YELLOW};
 
-    private Cell() {
+    Cell() {
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                button = e.getButton();
                 isHide = true;
                 repaint();
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("in");
+              //  System.out.println("in");
                 mouseEnter = true;
                 repaint();
 
@@ -46,71 +35,59 @@ public class Cell extends JLabel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("out");
+              //  System.out.println("out");
                 mouseEnter = false;
                 repaint();
             }
-
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                super.mouseWheelMoved(e);
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                super.mouseMoved(e);
-            }
         });
-        count++;
+
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
 
-     //   super.paintComponent(g);
-        g.setColor(colors[count]);
-        g.fillRect(getLocation().x + 20, getLocation().y + 20, getBounds().width - 40, getBounds().height - 40);
+        super.paintComponent(g);
+
         if (!isHide) {
             if (!mouseEnter) {
-                g.drawRect(getLocation().x + 10, getLocation().y + 10, getBounds().width - 20, getBounds().height - 20);
+                g.drawRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
             } else {
                 g.drawRect(getBounds().x + 4, getBounds().y + 4, getBounds().width - 8, getBounds().height - 8);
                 g.drawRect(getBounds().x + 5, getBounds().y + 5, getBounds().width - 10, getBounds().height - 10);
             }
         } else {
             g.setColor(Color.GRAY);
-            g.fillRect(getBounds().x + 5, getBounds().y + 5, getBounds().width - 10, getBounds().height - 10);
-            g.setColor(colors[count]);
-            g.drawString("1", getBounds().width / 2, getBounds().height / 2);
+            g.fillRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
+            g.setColor(Color.BLUE);
+            g.setFont(new Font("Serif", Font.ITALIC, getBounds().height / 3));
+            g.drawString(String.valueOf(button), getBounds().width / 2, getBounds().height / 2);
         }
     }
 
     public static void main(String[] arg) {
-
+        JFrame frame = new JFrame();
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(140, 70);
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 3));
-
-//        frame.getContentPane().add(new Cell());
-
-        panel.add(new Cell());
-        panel.add(new Cell());
-        panel.add(new Cell());
-
-
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
-        frame.getContentPane().add(panel, CENTER);
+        frame.getContentPane().add(panel);
+        JPanel panel1 = new JPanel();
+        panel1.add(new Cell());
+        panel1.setLayout(new GridLayout(1, 1));
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayout(1, 1));
+        panel2.add(new Cell());
+        JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayout(1, 1));
+        panel3.add(new Cell());
+        panel.add(panel1);
+        panel.add(panel2);
+        panel.add(panel3);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
-        //  frame.pack();
     }
 
 }
