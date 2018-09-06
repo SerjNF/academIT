@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class UItest {
     JFrame frame;
-    int x = 12, y = 12;
+    int x = 15, y = 12;
     Cell[][] cells;
     UItest(){
         cells = new Cell[x][y];
