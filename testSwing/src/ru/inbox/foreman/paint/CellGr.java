@@ -6,12 +6,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Cell extends JPanel {
+public class CellGr extends JPanel {
     private boolean mouseEnter = false;
     private boolean isHide = false;
     private int button = 0;
 
-    Cell() {
+    CellGr() {
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -39,11 +39,10 @@ public class Cell extends JPanel {
 
     }
 
-
     @Override
-    public void paintComponent(Graphics g) {
+    public void paint(Graphics g) {
 
-        super.paintComponent(g);
+        super.paint(g);
 
         if (!isHide) {
             if (!mouseEnter) {
@@ -72,14 +71,14 @@ public class Cell extends JPanel {
         panel.setLayout(new GridLayout(1, 3));
         frame.getContentPane().add(panel);
         JPanel panel1 = new JPanel();
-        panel1.add(new Cell());
+        panel1.add(new CellGr());
         panel1.setLayout(new GridLayout(1, 1));
         JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayout(1, 1));
-        panel2.add(new Cell());
+        panel2.add(new CellGr());
         JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayout(1, 1));
-        panel3.add(new Cell());
+        panel3.add(new CellGr());
         panel.add(panel1);
         panel.add(panel2);
         panel.add(panel3);

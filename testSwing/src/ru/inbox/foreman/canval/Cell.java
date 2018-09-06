@@ -58,28 +58,6 @@ public class Cell extends Canvas {
     }
 
 
-//    private class MyCanvas extends Canvas {
-//        @Override
-//        public void paint(Graphics g) {
-//            g.fillRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
-//            if (!isHide) {
-//                if (!mouseEnter) {
-//                    g.drawRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
-//                } else {
-//                    g.drawRect(getBounds().x + 4, getBounds().y + 4, getBounds().width - 8, getBounds().height - 8);
-//                    g.drawRect(getBounds().x + 5, getBounds().y + 5, getBounds().width - 10, getBounds().height - 10);
-//                }
-//            } else {
-//                g.setColor(Color.GRAY);
-//                g.fillRect(getBounds().x + 1, getBounds().y + 1, getBounds().width - 2, getBounds().height - 2);
-//                g.setColor(Color.BLUE);
-//                g.setFont(new Font("Arial", Font.BOLD, getBounds().height / 2));
-//
-//                g.drawString(String.valueOf(button), getBounds().width * 2 / 5, getBounds().height * 2 / 3);
-//            }
-//        }
-//    }
-
 
     public static void main(String[] arg) {
         JFrame frame = new JFrame();
